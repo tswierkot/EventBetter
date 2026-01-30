@@ -525,17 +525,13 @@ public static partial class EventBetter
 
     private static object GetAliveTarget(object target)
     {
-        if (target == null)
+        if (ReferenceEquals(target, null))
             return null;
 
-        var targetAsUnityObject = target as UnityEngine.Object;
-        if (object.ReferenceEquals(targetAsUnityObject, null))
-            return target;
+        if (target is UnityEngine.Object unityObject && !unityObject) 
+            return null;
 
-        if (targetAsUnityObject)
-            return target;
-
-        return null;
+        return target;
     }
 
     private static void RemoveUnusedHandlers(EventEntry entry)
